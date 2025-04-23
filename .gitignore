@@ -1,0 +1,22 @@
+# ignore ALL .log files
+*.log
+
+
+# ignore ALL files in ANY directory named temp
+temp/
+
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+
+
+# Packages
+**/package-lock.json
+**/yarn.lock
+
+
+
+vendor
