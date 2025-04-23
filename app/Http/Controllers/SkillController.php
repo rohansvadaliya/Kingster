@@ -22,30 +22,20 @@ class SkillController extends Controller
 			$response = errorRes("Please fill the blanks");
 			$response['data'] = $validator->errors();
 		}else{
-			$alreadySkill = Skill::query();
-	        $alreadySkill->where('name',$request->name);
-			if($skillRecordId != 0){
-				$alreadySkill->where('id','!=',$skillRecordId);
-			}
-		    $alreadySkill = $alreadySkill->first();
 
-			if(!$alreadySkill){
-				if($skillRecordId == 0){
-					$SkillRecord = new Skill();
-				}else{
-					$SkillRecord = Skill::find($skillRecordId);
-				}
+            if($skillRecordId == 0){
+                $SkillRecord = new Skill();
+            }else{
+                $SkillRecord = Skill::find($skillRecordId);
+            }
 
-				$SkillRecord->name = $request->name;
-				$SkillRecord->save();
+            $SkillRecord->name = $request->name;
+            $SkillRecord->save();
 
-				$SkillRecord = Skill::select('id', 'name')->where('id', '=', $SkillRecord->id)->first();
+            $SkillRecord = Skill::select('id', 'name')->where('id', '=', $SkillRecord->id)->first();
 
-				$response = successRes("Skill successfully saved");
-				$response['data'] = $SkillRecord;
-			}else{
-				$response = errorRes("Skill already exists");
-			}
+            $response = successRes("Skill successfully saved");
+            $response['data'] = $SkillRecord;
         }
         return response()->json($response)->header('Content-Type', 'application/json');
     }
@@ -158,7 +148,7 @@ class SkillController extends Controller
 	}
 
     public function lists(Request $request){
-       
+
 		$searchKeyword = isset($request->search_value) ? $request->search_value : "";
 		$id = isset($request->id) ? $request->id : 0;
 

@@ -79,7 +79,7 @@ const app = new Vue({
                 this.reloadDataTable();
             })
             .catch(error => {
-                console.log("Full error response:", error.response.data); // 👈 Add this line
+                console.log("Full error response:", error.response.data);
 
                 if (error.response && error.response.status === 422) {
                     const errors = error.response.data.errors;
@@ -135,7 +135,6 @@ function resetSkillForm(){
 }
 
 function editView(id) {
-
     resetSkillForm();
 
     const getSingleRecord = "/admin/skill/single/records";
@@ -144,10 +143,11 @@ function editView(id) {
         type: 'GET',
         url: getSingleRecord + "?id=" + id,
         success: function(resultData) {
-
             if (resultData['status'] == 1) {
-                $("#skill_id").val(resultData['data']['id']);
-                $("#skill_name").val(resultData['data']['name']);
+                const data = resultData['data'];
+
+                app.skill_id = data['id'];
+                app.skill_name = data['name'];
             }
             $("#SkillBtnLabel").html("Update");
         }
